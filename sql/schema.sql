@@ -56,3 +56,22 @@ CREATE TABLE emission_factors(
     valid_from DATE,
     created_at TIMESTAMPZ DEFAULT CURRENT_TIMESTAMP
 );
+
+-------------------------------------------------------------------------------------------------------
+-- emissions_calculations (TABLE 4)
+-- Stores calculated greenhouse-gas emissions derived from activity records and emission factors.
+--
+-- Formula:
+-- activity quantity  x emission factor
+
+-- Every calculation remains auditable because both the source activity and emission factor are stored.
+--------------------------------------------------------------------------------------------------------
+CREATE TABLE emission_calculations (
+    calculation_id SERIAL PRIMARY KEY,
+    activity_id INT NOT NULL,
+        REFERENCES activities(activity_id),
+    factor_id INT NOT NULL,
+        REFERENCES emission_factors(factor_id),
+    emissions_kgco2e DECIMAL(18, 2) NOT NULL,
+    calculation_timestamp TIMESTAMPZ DEFAULT CURRENT_TIMESTAMP
+);
