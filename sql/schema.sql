@@ -75,3 +75,23 @@ CREATE TABLE emission_calculations (
     emissions_kgco2e DECIMAL(18, 2) NOT NULL,
     calculation_timestamp TIMESTAMPZ DEFAULT CURRENT_TIMESTAMP
 );
+
+-------------------------------------------------------------------------------------------------
+-- carbon_ledger (TABLE 5)
+-- Stores the official greenhouse-gas emission records used for reporting and disclosure purposes.
+--
+-- The ledger classifies emissions into Scope 1, Scope 2, and Scope 3 categories 
+-- and provides a complete audit trail back to the underlying calculation.
+---------------------------------------------------------------------------------------------------
+CREATE TABLE carbon_ledger (
+    ledger_id SERIAL PRIMARY KEY,
+    company_id INT NOT NULL
+        REFERENCES comapnies(company_id),
+    calculation_id INT NOT NULL
+        REFERENCES emission_calculations(calculation_id),
+    reporting_period DATE NOT NULL,
+    scope VARCHAR(20) NOT NULL,
+    emissions_kgco2e DECIMAL(18, 6) NOT NULL,
+    recorded_at TIMESTAMPZ
+        DEFAULT CURRENT_TIMESTAMP
+);
