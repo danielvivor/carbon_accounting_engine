@@ -11,7 +11,7 @@
 ---------------------------------------------------------
 CREATE TABLE companies (
     company_id SERIAL PRIMARY KEY,
-    comapny_name VARCHAR(200) NOT NULL,
+    company_name VARCHAR(200) NOT NULL,
     industry VARCHAR(100),
     country VARCHAR(100),
     created_at TIMESTAMPZ DEFAULT CURRENT_TIMESTAMP
@@ -31,7 +31,7 @@ CREATE TABLE companies (
 CREATE TABLE activities (
     activity_id SERIAL PRIMARY KEY,
     company_id INT NOT NULL
-        REFERENCES comapnies(company_id),
+        REFERENCES companies(company_id),
     activity_date DATE NOT NULL,
     activity_type VARCHAR(50) NOT NULL,
     quantity DECIMAL(12, 2) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE emission_calculations (
 CREATE TABLE carbon_ledger (
     ledger_id SERIAL PRIMARY KEY,
     company_id INT NOT NULL
-        REFERENCES comapnies(company_id),
+        REFERENCES companies(company_id),
     calculation_id INT NOT NULL
         REFERENCES emission_calculations(calculation_id),
     reporting_period DATE NOT NULL,
